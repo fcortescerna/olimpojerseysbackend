@@ -6,46 +6,55 @@ const getProductos = asyncHandler( async(req, res) => {
     res.status(200).json({productos})
 })
 
-const createProductos = asyncHandler( async(req, res) => {
-    if(!req.body.texto){
+const createProductos = asyncHandler(async (req, res) => {
+    const { descripcion, marca, precio, existencia } = req.body
+
+    if (!descripcion || !marca || precio == null || existencia == null) {
         res.status(400)
-        throw new Error("Porfavor de escribir un texto")
+        throw new Error("Todos los campos son obligatorios")
     }
 
-    const productos = await Producto.create({
-        texto: req.body.texto
+    const producto = await Producto.create({
+        descripcion,
+        marca,
+        precio,
+        existencia
     })
-    res.status(201).json({productos})
+
+    res.status(201).json({ producto })
 })
 
-const updateProductos = asyncHandler( async(req, res) => {
+const updateProductos = asyncHandler(async (req, res) => {
+    const producto = await Producto.findById(req.params.id)
 
-
-    const prodcutos = await Producto.findById(req.params.id)
-    if(!prodcutos) {
+    if (!producto) {
         res.status(404)
         throw new Error('Producto no encontrado')
     }
 
-    const productoUpdated = await Producto.findByIdAndUpdate(req.params.id,req.body, {
-        new:true
-    })
+    const productoActualizado = await Producto.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true, runValidators: true }
+    )
 
-    res.status(200).json(productoUpdated)
+    res.status(200).json(productoActualizado)
 })
 
-const deleteProductos = asyncHandler( async(req, res) => {
-    
-    const productos = await Producto.findById(req.params.id)
-    if(!productos) {
+
+const deleteProductos = asyncHandler(async (req, res) => {
+    const producto = await Producto.findById(req.params.id)
+
+    if (!producto) {
         res.status(404)
         throw new Error('Producto no encontrado')
     }
-    
-    await productos.deleteOne()
 
-    res.status(200).json({ "id": req.params.id})
+    await producto.deleteOne()
+
+    res.status(200).json({ id: req.params.id })
 })
+
 
 module.exports = {
     getProductos, 
