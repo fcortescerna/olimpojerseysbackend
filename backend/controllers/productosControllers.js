@@ -21,8 +21,8 @@ const createProductos = asyncHandler( async(req, res) => {
 const updateProductos = asyncHandler( async(req, res) => {
 
 
-    const prodcutos = await Producto.findById(req.params.id)
-    if(!prodcutos) {
+    const productos = await Producto.findById(req.params.id)
+    if(!productos) {
         res.status(404)
         throw new Error('Producto no encontrado')
     }
