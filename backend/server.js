@@ -12,7 +12,11 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-app.use('/api/productos', require ('./routes/productosRoutes.js'))
+app.use('/api/productos', require('./routes/productosRoutes.js'))
+
+app.get("/", (req, res) => {
+  res.send("Todo funcionando correctamente");
+});
 
 app.use(errorHandler)
 
