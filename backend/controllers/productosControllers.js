@@ -20,8 +20,11 @@ const createProductos = asyncHandler(async (req, res) => {
         precio,
         existencia
     })
-    console.log("Producto creado exitosamente")
-    res.status(201).json({ producto })
+    
+    res.status(201).json({ 
+        mensaje: "Producto creado exitosamente",
+        producto 
+    })
 })
 
 const updateProductos = asyncHandler( async(req, res) => {

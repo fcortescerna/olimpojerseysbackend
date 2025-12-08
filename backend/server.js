@@ -15,7 +15,7 @@ app.use(express.urlencoded({extended: false}))
 app.use('/api/productos', require('./routes/productosRoutes.js'))
 
 app.get("/", (req, res) => {
-  res.send("Deploy Automatico Funcionando");
+  res.send("Todo bien con el deploy automatico");
 });
 
 app.use(errorHandler)
