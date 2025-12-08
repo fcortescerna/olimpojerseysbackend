@@ -20,7 +20,7 @@ const createProductos = asyncHandler(async (req, res) => {
         precio,
         existencia
     })
-
+    console.log("Producto creado exitosamente")
     res.status(201).json({ producto })
 })
 
